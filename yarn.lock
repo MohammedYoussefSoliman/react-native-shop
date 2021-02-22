@@ -1152,7 +1152,7 @@
   dependencies:
     cross-spawn "^6.0.5"
 
-"@expo/vector-icons@^12.0.0":
+"@expo/vector-icons@^12.0.0", "@expo/vector-icons@^12.0.3":
   version "12.0.3"
   resolved "https://registry.yarnpkg.com/@expo/vector-icons/-/vector-icons-12.0.3.tgz#d7379a3a6bfd4189bc6aed9b9d295f3aca6a5ece"
   integrity sha512-KlQ1MC2ff/CBYV/Nsu+O7wa712I0plb5N5PdMhYxLbVGW2KkULEbAoFp04nab3R4eej/Tq10G+yjTu04q16n3g==
@@ -3004,13 +3004,6 @@ expo-file-system@~9.3.0:
   integrity sha512-x83IVep6PVfzGLpzR5fhWgKGlDaF95vfRzvmLyOMnbSuM8gY9a8C92taxZxfitryy9+D46lbRcnxPvBqFkXMNg==
   dependencies:
     uuid "^3.4.0"
-
-expo-font@^9.0.0:
-  version "9.0.0"
-  resolved "https://registry.yarnpkg.com/expo-font/-/expo-font-9.0.0.tgz#638db10cbb09a1d03de823704d166e745f5cbae3"
-  integrity sha512-hMuyPNyni1MXYzAdKRMlaEm7StCvuaxsNohhDF9noh0HXizmnsWc6a5AGcJJgRO/iJssk/iL2nzP4nYdB+rrGQ==
-  dependencies:
-    fontfaceobserver "^2.1.0"
 
 expo-font@~8.4.0:
   version "8.4.0"
@@ -5237,7 +5230,7 @@ range-parser@~1.2.1:
   resolved "https://registry.yarnpkg.com/range-parser/-/range-parser-1.2.1.tgz#3cf37023d199e1c24d1a55b84800c2f3e6468031"
   integrity sha512-Hrgsx+orqoygnmhFbKaHE6c296J+HTAQXoxEF6gNupROmmGJRoyzfG3ccAveqCBrwr/2yxQ5BVd/GTl5agOwSg==
 
-react-devtools-core@^4.6.0:
+react-devtools-core@^4.10.1, react-devtools-core@^4.6.0:
   version "4.10.1"
   resolved "https://registry.yarnpkg.com/react-devtools-core/-/react-devtools-core-4.10.1.tgz#6d57db291aeac9cc45ef9fb4636dd2ab97490daf"
   integrity sha512-sXbBjGAWcf9HAblTP/zMtFhGHqxAfIR+GPxONZsSGN9FHnF4635dx1s2LdQWG9rJ+Ehr3nWg+BUAB6P78my5PA==
@@ -5299,10 +5292,10 @@ react-native-safe-area-view@^0.14.9:
   dependencies:
     hoist-non-react-statics "^2.3.1"
 
-react-native-screens@^2.17.1:
-  version "2.17.1"
-  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.17.1.tgz#c3c0ac750af48741c5b1635511e6af2a27b74309"
-  integrity sha512-B4gD5e4csvlVwlhf+RNqjQZ9mHTwe/iL3rXondgZxnKz4oW0QAmtLnLRKOrYVxoaJaF9Fy7jhjo//24/472APQ==
+react-native-screens@~2.15.2:
+  version "2.15.2"
+  resolved "https://registry.yarnpkg.com/react-native-screens/-/react-native-screens-2.15.2.tgz#a449700e895b462937211ec72ed6f09652758f06"
+  integrity sha512-CagNf2APXkVoRlF3Mugr264FbKbrBg9eXUkqhIPVeZB8EsdS8XPrnt99yj/pzmT+yJMBY0dGrjXT8+68WYh6YQ==
 
 react-native-web@~0.13.12:
   version "0.13.18"
@@ -5351,10 +5344,10 @@ react-native-web@~0.13.12:
     use-subscription "^1.0.0"
     whatwg-fetch "^3.0.0"
 
-react-navigation-header-buttons@^6.2.0:
-  version "6.2.0"
-  resolved "https://registry.yarnpkg.com/react-navigation-header-buttons/-/react-navigation-header-buttons-6.2.0.tgz#752540111c3200753a19e1b1680d14b869fe4d94"
-  integrity sha512-nkRpl9DAtYS/TtEETlsHTgHKitzcIerMNafdSr3vGHPUYDo7i04LA43DT5eg9mWc4qwQhIRx5/2522xn0fyDDg==
+react-navigation-header-buttons@^6.2.1:
+  version "6.2.1"
+  resolved "https://registry.yarnpkg.com/react-navigation-header-buttons/-/react-navigation-header-buttons-6.2.1.tgz#ceaf080dac2ddaace19bf03ba12b420162ef0f00"
+  integrity sha512-1UYxuZ29oNfXhgc4x4ZzaH8pcqiYd3WJGE0zldqdiFW3D/Anr08zH50eegl0uHrnTjZIt+qcGhPWP9C0Cxf4UA==
   dependencies:
     invariant ">=2"
 
@@ -5416,6 +5409,11 @@ readable-stream@^2.0.1, readable-stream@^2.2.2, readable-stream@~2.3.6:
     safe-buffer "~5.1.1"
     string_decoder "~1.1.1"
     util-deprecate "~1.0.1"
+
+redux-devtools-extension@^2.13.8:
+  version "2.13.8"
+  resolved "https://registry.yarnpkg.com/redux-devtools-extension/-/redux-devtools-extension-2.13.8.tgz#37b982688626e5e4993ff87220c9bbb7cd2d96e1"
+  integrity sha512-8qlpooP2QqPtZHQZRhx3x3OP5skEV1py/zUdMY28WNAocbafxdG2tRD1MWE7sp8obGMNYuLWanhhQ7EQvT1FBg==
 
 redux@^4.0.5:
   version "4.0.5"

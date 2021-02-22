@@ -2,14 +2,19 @@ import React, {useState} from 'react';
 import 'react-native-gesture-handler';
 import {createStore, combineReducers} from 'redux';
 import {Provider} from 'react-redux';
+import { composeWithDevTools } from 'redux-devtools-extension';
 import {useFonts, loadAsync} from 'expo-font';
+
 // import { useFonts,
 //   Sarabun_400Regular,
 //   Sarabun_500Medium,
 //   Sarabun_600SemiBold,
 //   Sarabun_700Bold  } from '@expo-google-fonts/sarabun';
+
 import AppLoading from 'expo-app-loading';
 import productsReducer from './store/reducers/products';
+import cartReducer from './store/reducers/cart';
+
 import ShopNavigator from './navigation/shopNavigator'
 
 export default function App() {
@@ -33,7 +38,8 @@ export default function App() {
   // })
 
   const rootReducer = combineReducers({
-    products: productsReducer
+    products: productsReducer,
+    cart: cartReducer
   });
 
   const store = createStore(rootReducer);

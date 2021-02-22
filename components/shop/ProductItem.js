@@ -64,14 +64,14 @@ const styles = StyleSheet.create({
         padding: 10
     },
     title: {
+        fontFamily: 'Sarabun-Bold',
         fontSize: 18,
         marginVertical: 4,
-        fontFamily: 'Sarabun-Bold'
     },
     price: {
+        fontFamily: 'Sarabun-Medium',
         fontSize: 14,
         color: "#888",
-        fontFamily: 'Sarabun-Medium'
     },
     actions: {
         flexDirection: 'row',
