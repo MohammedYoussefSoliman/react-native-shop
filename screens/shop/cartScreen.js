@@ -1,6 +1,8 @@
 import React from 'react';
 import {View, Text, FlatList, Button, StyleSheet} from 'react-native';
-import {useSelector} from 'react-redux';
+import {useSelector, useDispatch} from 'react-redux';
+import CartItem from '../../components/shop/cartItem';
+import {removeCartItem} from '../../store/actions/cart';
 import Colors from '../../constants/colors';
 
 const CartScreen = () => {
@@ -19,6 +21,7 @@ const CartScreen = () => {
         }
         return allItems
     })
+    const dispatch = useDispatch();
     return (
         <View style={styles.screen}>
             <View style={styles.summery}>
@@ -28,7 +31,15 @@ const CartScreen = () => {
                 <Button title="Order Now" disabled={cartItems.length ===0}/>
             </View>
             <View>
-                <Text>Cart items</Text>
+                <FlatList 
+                    data={cartItems}
+                    keyExtractor={item=>item.id}
+                    renderItem={itemData => (<CartItem 
+                        title={itemData.item.title}
+                        quantity={itemData.item.quantity}
+                        amount={itemData.item.sum}
+                        onRemove={()=>{dispatch(removeCartItem(itemData.item.id))}}
+                    />)} />
             </View>
         </View>
     )
