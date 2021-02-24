@@ -14,6 +14,7 @@ import {useFonts, loadAsync} from 'expo-font';
 import AppLoading from 'expo-app-loading';
 import productsReducer from './store/reducers/products';
 import cartReducer from './store/reducers/cart';
+import ordersReducer from './store/reducers/orders';
 
 import ShopNavigator from './navigation/shopNavigator'
 
@@ -39,7 +40,8 @@ export default function App() {
 
   const rootReducer = combineReducers({
     products: productsReducer,
-    cart: cartReducer
+    cart: cartReducer,
+    orders: ordersReducer
   });
 
   const store = createStore(rootReducer);
