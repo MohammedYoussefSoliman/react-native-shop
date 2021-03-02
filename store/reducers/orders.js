@@ -11,7 +11,7 @@ export default (state=initialState, action) => {
         case ADD_ORDER:
             const newOrder = new Order(new Date().toString(),
             action.payload.items,
-            action.payload.amount, new Date)
+            action.payload.amount, new Date().toString())
             return {
                 ...state,
                 orders: state.orders.concat(newOrder)

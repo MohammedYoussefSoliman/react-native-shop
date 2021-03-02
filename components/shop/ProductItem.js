@@ -30,7 +30,7 @@ const ProductItem = ({image, title, price, onViewDetails, onAddToCart}) => {
                     onPress={onViewDetails}/>
                 <Button
                     color={Colors.primary}
-                    title="To Cart"
+                    title="Add to cart"
                     onPress={onAddToCart}/>
             </View>
         </View>

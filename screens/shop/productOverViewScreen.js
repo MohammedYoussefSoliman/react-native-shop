@@ -20,11 +20,13 @@ const ProductOverviewScreen = ({navigation}) => {
                 title={itemData.item.title}
                 price={itemData.item.price}
                 image={itemData.item.imageUrl}
+
                 onViewDetails={()=>{navigation.navigate("ProductDetails", {
                     prodId: itemData.item.id,
                     prodTitle: itemData.item.title
-                })}} />)}
-                onAddToCart={()=>{dispatch(cartAction.addToCart(itemData.item))}} />
+                })}}
+
+                onAddToCart={()=>{dispatch(cartAction.addToCart(itemData.item))}} />)} />
     )
 }
 
@@ -37,6 +39,14 @@ ProductOverviewScreen.navigationOptions = navData => {
                     title="Cart"
                     iconName={Platform.OS === 'android' ? 'md-cart' : 'ios-cart'}
                     onPress={()=>{navData.navigation.navigate('Cart')}}/>
+            </HeaderButtons>
+        ),
+        headerLeft: () => (
+            <HeaderButtons HeaderButtonComponent={HeaderBtn}>
+                <Item 
+                    title="menu"
+                    iconName={Platform.OS === 'android' ? 'md-menu' : 'ios-menu'}
+                    onPress={()=>{navData.navigation.toggleDrawer()}}/>
             </HeaderButtons>
         )
     }
