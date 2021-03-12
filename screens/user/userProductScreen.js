@@ -1,10 +1,10 @@
 import React from "react";
-import { FlatList, Button, Platform } from "react-native";
+import { FlatList, Button, Alert, Platform } from "react-native";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
+import HeaderBtn from "../../components/UI/headerButton/headerButton";
 import { useSelector, useDispatch } from "react-redux";
 import { deleteProduct } from "../../store/actions/products";
 import ProductItem from "../../components/shop/ProductItem";
-import HeaderBtn from "../../components/UI/headerButton/headerButton";
 import Colors from "../../constants/colors";
 
 const UserProducts = ({ navigation }) => {
@@ -13,6 +13,18 @@ const UserProducts = ({ navigation }) => {
   const handleEditProduct = (id) => {
     navigation.navigate("editeProducts", { productId: id });
   };
+
+  const onDeleteHandler = (id) => {
+    Alert.alert("Are you sure?", "You want to delete this product", [
+      { text: "No", style: "default" },
+      {
+        text: "Yes",
+        style: "destructive",
+        onPress: () => dispatch(deleteProduct(id)),
+      },
+    ]);
+  };
+
   return (
     <FlatList
       data={users}
@@ -35,9 +47,7 @@ const UserProducts = ({ navigation }) => {
           <Button
             color={Colors.primary}
             title="delete"
-            onPress={() => {
-              dispatch(deleteProduct(itemData.item.id));
-            }}
+            onPress={() => onDeleteHandler(itemData.item.id)}
           />
         </ProductItem>
       )}

@@ -26,7 +26,9 @@ const CartScreen = () => {
     <View style={styles.screen}>
       <View style={styles.summery}>
         <Text style={styles.summeryText}>
-          <Text style={styles.amount}>Total: ${totalAmount.toFixed(2)}</Text>
+          <Text style={styles.amount}>
+            Total: ${Math.round(totalAmount.toFixed(2) * 100) / 100}
+          </Text>
         </Text>
         <Button
           title="Order Now"
