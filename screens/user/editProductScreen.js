@@ -1,4 +1,4 @@
-import React, { useState, useCallback, useEffect } from "react";
+import React, { useState, useCallback, useEffect, useReducer } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import Product from "../../models/product";
 import { HeaderButtons, Item } from "react-navigation-header-buttons";
@@ -7,101 +7,144 @@ import HeaderBtn from "../../components/UI/headerButton/headerButton";
 import {
   View,
   ScrollView,
+  Alert,
   Text,
   TextInput,
   Platform,
   StyleSheet,
 } from "react-native";
+import { formActions, formReducer } from "./formReducer";
+import Input from "./input";
 
 const EditProductScreen = ({ navigation }) => {
   const prodId = navigation.getParam("productId");
   const editProduct = useSelector((state) =>
     state.products.userProducts.find((prod) => prod.id === prodId)
   );
-  const [title, setTitle] = useState(editProduct ? editProduct.title : "");
-  const [imageUrl, setImageUrl] = useState(
-    editProduct ? editProduct.imageUrl : ""
-  );
-  const [price, setPrice] = useState(editProduct ? editProduct.price : "");
-  const [description, setDescription] = useState(
-    editProduct ? editProduct.description : ""
-  );
+  const [isValid, setIsValid] = useState(false);
 
   const dispatch = useDispatch();
+  const formInitialState = {
+    inputValues: {
+      title: editProduct ? editProduct.title : "",
+      imageUrl: editProduct ? editProduct.imageUrl : "",
+      price: editProduct ? editProduct.price : "",
+      description: editProduct ? editProduct.description : "",
+    },
+    validations: {
+      title: editProduct ? true : false,
+      imageUrl: editProduct ? true : false,
+      price: editProduct ? true : false,
+      description: editProduct ? true : false,
+    },
+    isFormValid: false,
+  };
+
+  const [formState, formDispatch] = useReducer(formReducer, formInitialState);
 
   const submitHandler = useCallback(() => {
     console.log("submitted !");
+
+    if (!formState.isFormValid) {
+      Alert.alert(
+        "Something went wrong",
+        "make sure that all feilds are entered",
+        [{ text: "return", style: "destructive" }]
+      );
+      return;
+    }
 
     if (editProduct) {
       // return edit
       const product = new Product(
         prodId,
         "u1",
-        title,
-        imageUrl,
-        description,
+        formState.inputValues.title,
+        formState.inputValues.imageUrl,
+        formState.inputValues.description,
         +editProduct.price
       );
       dispatch(actions.editProduct(product));
-      console.log("submitted edit product");
-      console.log(product);
     } else {
       // return add
       const product = new Product(
         new Date().toString(),
         "u1",
-        title,
-        imageUrl,
-        description,
-        +price
+        formState.inputValues.title,
+        formState.inputValues.imageUrl,
+        formState.inputValues.description,
+        +formState.inputValues.price
       );
       dispatch(actions.addProduct(product));
-      console.log("submitted add product");
-      console.log(product);
     }
     navigation.goBack();
-  }, [title, imageUrl, description, price]);
+  }, [dispatch, formState]);
 
   useEffect(() => {
     navigation.setParams({ submit: submitHandler });
   }, [submitHandler]);
 
+  const handleFormInput = (value, inputName) => {
+    if (value.trim().length === 0) {
+      setIsValid(false);
+    } else {
+      setIsValid(true);
+    }
+    formDispatch({
+      type: formActions.FORM_INPUT_UPDATE,
+      value: value,
+      input: inputName,
+      isValid,
+    });
+  };
+
   return (
     <ScrollView style={styles.form}>
-      <View style={styles.formControl}>
-        <Text style={styles.label}>Title</Text>
-        <TextInput
-          style={styles.input}
-          value={title}
-          onChangeText={(text) => setTitle(text)}
-        />
-      </View>
-      <View style={styles.formControl}>
-        <Text style={styles.label}>Image URL</Text>
-        <TextInput
-          style={styles.input}
-          value={imageUrl}
-          onChangeText={(text) => setImageUrl(text)}
-        />
-      </View>
+      <Input
+        label="title"
+        error="this field is required"
+        value={formState.inputValues.title}
+        isValid={formState.validations.title}
+        changeHandler={(value) => handleFormInput(value, "title")}
+        autoCapitalize="sentences"
+      />
+      <Input
+        label="Image URL"
+        error="this field is required"
+        value={formState.inputValues.imageUrl}
+        isValid={formState.validations.imageUrl}
+        changeHandler={(value) => handleFormInput(value, "imageUrl")}
+      />
+
       {editProduct ? null : (
-        <View style={styles.formControl}>
-          <Text style={styles.label}>Price</Text>
-          <TextInput
-            style={styles.input}
-            value={"" + price}
-            onChangeText={(text) => setPrice(text)}
-          />
-        </View>
+        <Input
+          label="Price"
+          error="this field is required"
+          value={formState.inputValues.price}
+          isValid={formState.validations.price}
+          changeHandler={(value) => handleFormInput(value, "price")}
+          keyboardType="decimal-pad"
+        />
       )}
       <View style={styles.formControl}>
         <Text style={styles.label}>Description</Text>
         <TextInput
           style={styles.input}
-          value={description}
-          onChangeText={(text) => setDescription(text)}
+          value={formState.inputValues.description}
+          onChangeText={(value) => handleFormInput(value, "description")}
         />
       </View>
+      <Input
+        label="Description"
+        error="this field is required"
+        value={formState.inputValues.description}
+        isValid={formState.validations.description}
+        changeHandler={(value) => handleFormInput(value, "description")}
+        autoCorrect
+        autoCapitalize="sentences"
+        multiline
+        numberOfLines={4}
+      />
     </ScrollView>
   );
 };
