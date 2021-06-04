@@ -5,13 +5,11 @@ import { HeaderButtons, Item } from "react-navigation-header-buttons";
 import * as actions from "../../store/actions/products";
 import HeaderBtn from "../../components/UI/headerButton/headerButton";
 import {
-  View,
   ScrollView,
   Alert,
-  Text,
-  TextInput,
   Platform,
   StyleSheet,
+  KeyboardAvoidingView,
 } from "react-native";
 import { formActions, formReducer } from "./formReducer";
 import Input from "./input";
@@ -99,53 +97,51 @@ const EditProductScreen = ({ navigation }) => {
   };
 
   return (
-    <ScrollView style={styles.form}>
-      <Input
-        label="title"
-        error="this field is required"
-        value={formState.inputValues.title}
-        isValid={formState.validations.title}
-        changeHandler={(value) => handleFormInput(value, "title")}
-        autoCapitalize="sentences"
-      />
-      <Input
-        label="Image URL"
-        error="this field is required"
-        value={formState.inputValues.imageUrl}
-        isValid={formState.validations.imageUrl}
-        changeHandler={(value) => handleFormInput(value, "imageUrl")}
-      />
-
-      {editProduct ? null : (
+    <KeyboardAvoidingView
+      behavior="padding"
+      keyboardVerticalOffset={100}
+      style={{ flex: 1 }}
+    >
+      <ScrollView style={styles.form}>
         <Input
-          label="Price"
+          label="title"
           error="this field is required"
-          value={formState.inputValues.price}
-          isValid={formState.validations.price}
-          changeHandler={(value) => handleFormInput(value, "price")}
-          keyboardType="decimal-pad"
+          value={formState.inputValues.title}
+          isValid={formState.validations.title}
+          changeHandler={(value) => handleFormInput(value, "title")}
+          autoCapitalize="sentences"
         />
-      )}
-      <View style={styles.formControl}>
-        <Text style={styles.label}>Description</Text>
-        <TextInput
-          style={styles.input}
+        <Input
+          label="Image URL"
+          error="this field is required"
+          value={formState.inputValues.imageUrl}
+          isValid={formState.validations.imageUrl}
+          changeHandler={(value) => handleFormInput(value, "imageUrl")}
+        />
+
+        {editProduct ? null : (
+          <Input
+            label="Price"
+            error="this field is required"
+            value={formState.inputValues.price}
+            isValid={formState.validations.price}
+            changeHandler={(value) => handleFormInput(value, "price")}
+            keyboardType="decimal-pad"
+          />
+        )}
+        <Input
+          label="Description"
+          error="this field is required"
           value={formState.inputValues.description}
-          onChangeText={(value) => handleFormInput(value, "description")}
+          isValid={formState.validations.description}
+          changeHandler={(value) => handleFormInput(value, "description")}
+          autoCorrect
+          autoCapitalize="sentences"
+          multiline
+          numberOfLines={4}
         />
-      </View>
-      <Input
-        label="Description"
-        error="this field is required"
-        value={formState.inputValues.description}
-        isValid={formState.validations.description}
-        changeHandler={(value) => handleFormInput(value, "description")}
-        autoCorrect
-        autoCapitalize="sentences"
-        multiline
-        numberOfLines={4}
-      />
-    </ScrollView>
+      </ScrollView>
+    </KeyboardAvoidingView>
   );
 };
 

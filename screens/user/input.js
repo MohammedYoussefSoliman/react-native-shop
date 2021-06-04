@@ -29,7 +29,6 @@ const styles = StyleSheet.create({
   },
   err: {
     fontFamily: "Sarabun-Regular",
-    fontWeight: 500,
     marginVertical: 8,
     color: "#E22222",
   },

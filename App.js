@@ -1,9 +1,10 @@
-import React, {useState} from 'react';
-import 'react-native-gesture-handler';
-import {createStore, combineReducers} from 'redux';
-import {Provider} from 'react-redux';
-import { composeWithDevTools } from 'redux-devtools-extension';
-import {useFonts, loadAsync} from 'expo-font';
+import React, { useState } from "react";
+import "react-native-gesture-handler";
+import { createStore, combineReducers, applyMiddleware } from "redux";
+import { Provider } from "react-redux";
+import ReduxThunk from "redux-thunk";
+import { composeWithDevTools } from "redux-devtools-extension";
+import { useFonts, loadAsync } from "expo-font";
 
 // import { useFonts,
 //   Sarabun_400Regular,
@@ -11,25 +12,24 @@ import {useFonts, loadAsync} from 'expo-font';
 //   Sarabun_600SemiBold,
 //   Sarabun_700Bold  } from '@expo-google-fonts/sarabun';
 
-import AppLoading from 'expo-app-loading';
-import productsReducer from './store/reducers/products';
-import cartReducer from './store/reducers/cart';
-import ordersReducer from './store/reducers/orders';
+import AppLoading from "expo-app-loading";
+import productsReducer from "./store/reducers/products";
+import cartReducer from "./store/reducers/cart";
+import ordersReducer from "./store/reducers/orders";
 
-import ShopNavigator from './navigation/shopNavigator';
+import ShopNavigator from "./navigation/shopNavigator";
 
 export default function App() {
-
   const [fontLoaded, setFontLoaded] = useState(false);
 
-  const fetchFonts = ()=> {
+  const fetchFonts = () => {
     return loadAsync({
-      'Sarabun-Bold': require('./assets/fonts/Sarabun-Bold.ttf'),
-      'Sarabun-Medium': require('./assets/fonts/Sarabun-Medium.ttf'),
-      'Sarabun-Regular': require('./assets/fonts/Sarabun-Regular.ttf'),
-      'Sarabun-Light': require('./assets/fonts/Sarabun-Light.ttf')
-    })
-  }
+      "Sarabun-Bold": require("./assets/fonts/Sarabun-Bold.ttf"),
+      "Sarabun-Medium": require("./assets/fonts/Sarabun-Medium.ttf"),
+      "Sarabun-Regular": require("./assets/fonts/Sarabun-Regular.ttf"),
+      "Sarabun-Light": require("./assets/fonts/Sarabun-Light.ttf"),
+    });
+  };
 
   // const [loadedFont] = useFonts({
   //     Sarabun_400Regular,
@@ -41,21 +41,24 @@ export default function App() {
   const rootReducer = combineReducers({
     products: productsReducer,
     cart: cartReducer,
-    orders: ordersReducer
+    orders: ordersReducer,
   });
 
-  const store = createStore(rootReducer);
+  const store = createStore(rootReducer, applyMiddleware(ReduxThunk));
 
-  if(!fontLoaded) {
-   return <AppLoading
-    startAsync={fetchFonts}
-    onFinish={()=>setFontLoaded(true)}
-    onError={console.error}/>
+  if (!fontLoaded) {
+    return (
+      <AppLoading
+        startAsync={fetchFonts}
+        onFinish={() => setFontLoaded(true)}
+        onError={console.error}
+      />
+    );
   }
 
-  return <Provider store={store}>
-          <ShopNavigator />
-        </Provider>
-
-
+  return (
+    <Provider store={store}>
+      <ShopNavigator />
+    </Provider>
+  );
 }

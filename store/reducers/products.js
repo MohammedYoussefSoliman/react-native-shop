@@ -1,15 +1,21 @@
 import ProductsData from "../../data/dummy-data";
-import { DELETE_PRODUCT, ADD_PRODUCT, EDIT_PRODUCT } from "../actions/products";
+import {
+  DELETE_PRODUCT,
+  ADD_PRODUCT,
+  EDIT_PRODUCT,
+  ADD_QUESTIONS,
+} from "../actions/products";
 
 const initialState = {
   availableProducts: ProductsData,
-  userProducts: ProductsData.filter((prod) => prod.ownerId === "u1"),
+  userProducts: ProductsData.filter((prod) => prod.ownerId === "u1"), // []
+  Questions: [],
 };
 
 export default (state = initialState, action) => {
   let allProducts = [...state.availableProducts];
   switch (action.type) {
-    case ADD_PRODUCT:
+    case ADD_PRODUCT: // Add_questions
       allProducts.push(action.payload);
       return {
         ...state,
@@ -38,6 +44,11 @@ export default (state = initialState, action) => {
         userProducts: state.userProducts.filter(
           (prod) => prod.id !== action.payload
         ),
+      };
+    case ADD_QUESTIONS:
+      return {
+        ...state,
+        Questions: [...action.payload],
       };
     default:
       return state;

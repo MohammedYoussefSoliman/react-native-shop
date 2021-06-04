@@ -9,6 +9,7 @@ import Colors from "../../constants/colors";
 
 const ProductOverviewScreen = ({ navigation }) => {
   const products = useSelector((state) => state.products.availableProducts);
+  const [loading, setLoading] = useState(false);
   const dispatch = useDispatch();
   const selectItemHandler = (id, title) => {
     navigation.navigate("ProductDetails", {
@@ -16,6 +17,78 @@ const ProductOverviewScreen = ({ navigation }) => {
       prodTitle: title,
     });
   };
+  const getQuestions = async () => {
+    try {
+      setLoading(true);
+      const { data } = axios.get(base, "./questions");
+      dispatch(cartAction.AddQuestions(data));
+    } catch (e) {
+    } finally {
+      setLoading(false);
+    }
+  };
+
+  useEffect(() => {
+    // componentDidMount
+    getQuestions();
+  }, []);
+
+  /*
+
+  const params = useParams()
+  const history = useHistory()
+
+  const username = useSelector(state => state.user.name)
+
+  const handleClickAnswer = async (answer, username) => {
+    try {
+      setButtonLoading(true);
+      const { data } = await axios.get(base, "./questions");
+      dispatch(cartAction.AddQuestions(data));
+    } catch (e) {
+    } finally {
+      setLoading(false);
+      props.questionsLength // 5
+      if(props.index < questionsLength-1) {
+        history.push(`/${props.index+1}`)
+      }else{
+        history.push(`/results`)
+      }
+    }
+  }
+
+  <Provider store={store}>
+    <Router>
+      <App />
+    </Router>
+  </Provider>
+  
+  return (
+    <>
+      <Switch>
+      questions.map((q, index)=> {
+        return (
+          <Route path={/index}>
+          <QuestionComponent key={q.id} title={q.name} answer={q.answer} index={index} />
+          </Route>
+        )
+      })
+      <Route path={/results} component={Results} />
+    
+    </Switch>
+  )
+
+      <div>
+        <h3>{props.title}</h3>
+        <div className="question--card">
+          <CHeck />
+        </div>
+
+        {!loadingButton ? <Button onClick={()=>handleClickAnswer(answer, username)}> : <Button disabled={true} /> }
+        <Button onClick={()=>handleClickAnswer(answer, username)}>
+      </div>
+  */
+
   return (
     <FlatList
       data={products}
